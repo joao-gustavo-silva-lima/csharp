@@ -5,6 +5,3 @@
 !*/*.cs
 !*/*.csproj
 !*/*.lock.json
-
-!*/.exercism/
-!*/.exercism/**
