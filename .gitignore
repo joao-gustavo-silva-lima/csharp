@@ -1,7 +1,0 @@
-*
-!.gitignore
-
-!*/
-!*/*.cs
-!*/*.csproj
-!*/*.lock.json
