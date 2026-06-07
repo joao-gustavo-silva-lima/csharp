@@ -1,0 +1,9 @@
+*
+!.gitignore
+
+!*.md
+
+!*/
+!*/*.cs
+!*/*.csproj
+!*/*.lock.json
