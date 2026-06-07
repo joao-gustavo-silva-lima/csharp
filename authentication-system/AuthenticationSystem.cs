@@ -1,22 +1,29 @@
+using System.Collections.ObjectModel;
+
+public struct Identity
+{
+    public string Email { get; set; }
+    public string EyeColor { get; set; }
+}
+
 public class Authenticator
 {
-    private class EyeColor
+    private static class EyeColor
     {
-        public string Blue = "blue";
-        public string Green = "green";
-        public string Brown = "brown";
-        public string Hazel = "hazel";
-        public string Grey = "grey";
+        public const string Blue = "blue";
+        public const string Green = "green";
+        public const string Brown = "brown";
+        public const string Hazel = "hazel";
+        public const string Grey = "grey";
     }
 
+    public readonly Identity Admin;
     public Authenticator(Identity admin)
     {
-        this.admin = admin;
+        Admin = admin;
     }
 
-    private Identity admin;
-
-    private IDictionary<string, Identity> developers
+    private static readonly IDictionary<string, Identity> _developers
         = new Dictionary<string, Identity>
         {
             ["Bertrand"] = new Identity
@@ -31,22 +38,9 @@ public class Authenticator
                 EyeColor = "brown"
             }
         };
+    private static readonly ReadOnlyDictionary<string, Identity> developers 
+        = new(_developers)
+    ;
 
-    public Identity Admin
-    {
-        get { return admin; }
-        set { admin = value; }
-    }
-
-    public IDictionary<string, Identity> GetDevelopers()
-    {
-        return developers;
-    }
-}
-
-public struct Identity
-{
-    public string Email { get; set; }
-
-    public string EyeColor { get; set; }
+    public IDictionary<string, Identity> GetDevelopers() => developers;
 }
