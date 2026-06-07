@@ -1,6 +1,8 @@
 *
 !.gitignore
 
+!*.md
+
 !*/
 !*/*.cs
 !*/*.csproj
