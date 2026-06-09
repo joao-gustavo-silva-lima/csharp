@@ -1,71 +1,42 @@
 class RemoteControlCar
 {
-    private int distanceDriven;
-    
-    private int batteryPercentage = 100;
-
+    private int _distanceDriven;
+    private int _batteryPercentage = 100;
 
     public int Speed { get; }
-
     public int BatteryDrain { get; }
+    public int BatteryPercentage => _batteryPercentage;
+    public int MaximumDistance => Speed * BatteryPercentage / BatteryDrain; 
 
-    public int BatteryPercentage 
-    { 
-        get { return batteryPercentage; } 
-    }
-
-    public RemoteControlCar
-    (
-        int _speed, 
-        int _batteryDrain
-    )
+    public RemoteControlCar(int speed, int batteryDrain)
     {
-        Speed = _speed;
-
-        BatteryDrain = _batteryDrain;
+        Speed = speed;
+        BatteryDrain = batteryDrain;
     }
-
-    public bool BatteryDrained()
-    {
-        return BatteryPercentage < BatteryDrain;
-    }
-
-    public int DistanceDriven()
-    {
-        return distanceDriven;
-    }
+    public static RemoteControlCar Nitro() => new(50, 4);
 
     public void Drive()
     {
         if(BatteryDrained()) return;
 
-        distanceDriven += Speed;
-
-        batteryPercentage -= BatteryDrain;
+        _distanceDriven += Speed;
+        _batteryPercentage -= BatteryDrain;
     }
 
-    public static RemoteControlCar Nitro()
-    {
-        return new(50, 4);
-    }
+    public int DistanceDriven() => _distanceDriven;
+
+    public bool BatteryDrained() => BatteryPercentage < BatteryDrain;
 }
 
 class RaceTrack
 {
-    private readonly int distance;
+    private readonly int _distance;
 
-    public RaceTrack(int _distance)
+    public RaceTrack(int distance)
     {
-        distance = _distance;
+        _distance = distance;
     }
 
-    public bool TryFinishTrack(RemoteControlCar car)
-    {
-        int carDriveableDistance = 
-            car.Speed * 
-            car.BatteryPercentage / 
-            car.BatteryDrain;
-
-        return carDriveableDistance >= distance;
-    }
+    public bool TryFinishTrack(RemoteControlCar car) => 
+        car.MaximumDistance >= _distance;
 }
