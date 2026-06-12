@@ -1,51 +1,64 @@
 public static class DialingCodes
 {
-    public static Dictionary<int, string> GetEmptyDictionary()
-    {
-        throw new NotImplementedException($"Please implement the (static) GetEmptyDictionary() method");
-    }
+    public static Dictionary<int, string> GetEmptyDictionary() => [];
 
-    public static Dictionary<int, string> GetExistingDictionary()
+    public static Dictionary<int, string> GetExistingDictionary() => new()
     {
-        throw new NotImplementedException($"Please implement the (static) GetExistingDictionary() method");
-    }
+        { 91, "India" },
+        { 55, "Brazil" },
+        { 1 , "United States of America" },
+    };
 
-    public static Dictionary<int, string> AddCountryToEmptyDictionary(int countryCode, string countryName)
+    public static Dictionary<int, string> AddCountryToEmptyDictionary(int countryCode, string countryName) => new()
     {
-        throw new NotImplementedException($"Please implement the (static) AddCountryToEmptyDictionary() method");
-    }
+        { countryCode, countryName }
+    };
 
     public static Dictionary<int, string> AddCountryToExistingDictionary(
         Dictionary<int, string> existingDictionary, int countryCode, string countryName)
     {
-        throw new NotImplementedException($"Please implement the (static) AddCountryToExistingDictionary() method");
+        existingDictionary.Add(countryCode, countryName);
+
+        return existingDictionary;
     }
 
-    public static string GetCountryNameFromDictionary(
-        Dictionary<int, string> existingDictionary, int countryCode)
+    public static string GetCountryNameFromDictionary(Dictionary<int, string> existingDictionary, int countryCode)
     {
-        throw new NotImplementedException($"Please implement the (static) GetCountryNameFromDictionary() method");
-    }
+        if(!existingDictionary.TryGetValue(countryCode, out var country))
+        {
+            return string.Empty;
+        }
 
-    public static bool CheckCodeExists(Dictionary<int, string> existingDictionary, int countryCode)
-    {
-        throw new NotImplementedException($"Please implement the (static) CheckCodeExists() method");
+        return country;
     }
+        
+
+    public static bool CheckCodeExists(Dictionary<int, string> existingDictionary, int countryCode) => 
+        existingDictionary.ContainsKey(countryCode);
 
     public static Dictionary<int, string> UpdateDictionary(
         Dictionary<int, string> existingDictionary, int countryCode, string countryName)
     {
-        throw new NotImplementedException($"Please implement the (static) UpdateDictionary() method");
+        if(!existingDictionary.ContainsKey(countryCode)) return existingDictionary;
+
+        existingDictionary[countryCode] = countryName;
+
+        return existingDictionary;
     }
 
     public static Dictionary<int, string> RemoveCountryFromDictionary(
         Dictionary<int, string> existingDictionary, int countryCode)
     {
-        throw new NotImplementedException($"Please implement the (static) RemoveCountryFromDictionary() method");
+        existingDictionary.Remove(countryCode);
+
+        return existingDictionary;
     }
 
-    public static string FindLongestCountryName(Dictionary<int, string> existingDictionary)
-    {
-        throw new NotImplementedException($"Please implement the (static) FindLongestCountryName() method");
-    }
+    public static string FindLongestCountryName(Dictionary<int, string> existingDictionary) {
+        if(existingDictionary.Count <= 0) return string.Empty;
+
+        return existingDictionary.Values
+            .OrderBy(countryName => countryName.Length)
+            .ToArray()[^1];
+    } 
 }
